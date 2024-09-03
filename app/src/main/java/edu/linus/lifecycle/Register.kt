@@ -14,12 +14,12 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
-class MainActivity : AppCompatActivity() {
+class Register : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             val mailField = findViewById<EditText>(R.id.mailField)
             val passwordField = findViewById<EditText>(R.id.passwordField)
             val button = findViewById<Button>(R.id.button)
-            val registerBtn = findViewById<TextView>(R.id.register)
+            val loginBtn = findViewById<TextView>(R.id.login)
             val db = Firebase.firestore
             // Create a new user with a first and last name
             val user = hashMapOf(
@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
 
                 //startActivity(Intent(this, User::class.java))
             }
-            registerBtn.setOnClickListener { view ->
-                startActivity(Intent(this, Register::class.java))
+            loginBtn.setOnClickListener { view ->
+                startActivity(Intent(this, MainActivity::class.java))
             }
             insets
 

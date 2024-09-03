@@ -17,6 +17,10 @@
             android:exported="false"
             android:theme="@style/Theme.Lifecycle" />
         <activity
+            android:name=".Register"
+            android:exported="false"
+            android:theme="@style/Theme.Lifecycle" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238345736209",
+    "project_id": "lifecycle-33385",
+    "storage_bucket": "lifecycle-33385.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238345736209:android:9c156bf66637676253e1b0",
+        "android_client_info": {
+          "package_name": "edu.linus.lifecycle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXnTZsJBfHIkr3nxfMpUKOtxOdRaIqGsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

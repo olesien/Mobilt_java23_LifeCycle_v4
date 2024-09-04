@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             val passwordField = findViewById<EditText>(R.id.passwordField)
             val button = findViewById<Button>(R.id.button)
             val registerBtn = findViewById<TextView>(R.id.register)
+            val errText = findViewById<TextView>(R.id.err)
             val db = Firebase.firestore
             // Create a new user with a first and last name
             val user = hashMapOf(

@@ -13,14 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -45,21 +49,36 @@ class MainActivity : AppCompatActivity() {
                         passwordField.text
                     )
                 )
-
-                // Add a new document with a generated ID
-                db.collection("users")
-                    .whereEqualTo("mail", mailField.text.toString())
-                    .whereEqualTo("password", passwordField.text.toString())
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        Log.d("Test", "Account found!")
-                        Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this, User::class.java))
+                auth.signInWithEmailAndPassword(mailField.text.toString(), passwordField.text.toString())
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("TAG", "signInWithEmail:success")
+                            val user = auth.currentUser
+                            startActivity(Intent(this, User::class.java));
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("TAG", "signInWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                baseContext,
+                                "Authentication failed.",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
                     }
-                    .addOnFailureListener { e ->
-                        errText.text = "Account could not be found"
-                        Log.w("Test", "Error adding document", e)
-                    }
+//                // Get user
+//                db.collection("users")
+//                    .whereEqualTo("mail", mailField.text.toString())
+//                    .get()
+//                    .addOnSuccessListener { documents ->
+//                        Log.d("Test", "Account found!")
+//                        Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_LONG).show()
+//                        startActivity(Intent(this, User::class.java))
+//                    }
+//                    .addOnFailureListener { e ->
+//                        errText.text = "Account could not be found"
+//                        Log.w("Test", "Error adding document", e)
+//                    }
 
                 //startActivity(Intent(this, User::class.java))
             }
@@ -69,6 +88,17 @@ class MainActivity : AppCompatActivity() {
             insets
 
 
+        }
+    }
+
+    public override fun onStart() {
+        super.onStart()
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            //Redirect to user page
+            startActivity(Intent(this, User::class.java))
         }
     }
 }

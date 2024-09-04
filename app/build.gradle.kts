@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(platform(libs.firebase.bom))
     implementation(libs.androidx.core.ktx)

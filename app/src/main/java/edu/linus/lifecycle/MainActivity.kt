@@ -7,12 +7,15 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.snapshots
+import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,13 +34,9 @@ class MainActivity : AppCompatActivity() {
             val errText = findViewById<TextView>(R.id.err)
             val db = Firebase.firestore
             // Create a new user with a first and last name
-            val user = hashMapOf(
-                "first" to "Ada",
-                "last" to "Lovelace",
-                "born" to 1815,
-            )
 
             button.setOnClickListener { view ->
+                errText.text = "";
                 Log.i(
                     "Test",
                     String.format(
@@ -49,11 +48,16 @@ class MainActivity : AppCompatActivity() {
 
                 // Add a new document with a generated ID
                 db.collection("users")
-                    .add(user)
-                    .addOnSuccessListener { documentReference ->
-                        Log.d("Test", "DocumentSnapshot added with ID: ${documentReference.id}")
+                    .whereEqualTo("mail", mailField.text.toString())
+                    .whereEqualTo("password", passwordField.text.toString())
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        Log.d("Test", "Account found!")
+                        Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_LONG).show()
+                        startActivity(Intent(this, User::class.java))
                     }
                     .addOnFailureListener { e ->
+                        errText.text = "Account could not be found"
                         Log.w("Test", "Error adding document", e)
                     }
 

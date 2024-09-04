@@ -82,13 +82,14 @@ class Register : AppCompatActivity() {
                     .add(user)
                     .addOnSuccessListener { documentReference ->
                         Log.d("Test", "DocumentSnapshot added with ID: ${documentReference.id}")
+                        Toast.makeText(this, "Successfully registered!", Toast.LENGTH_LONG).show()
+                        startActivity(Intent(this, User::class.java))
                     }
                     .addOnFailureListener { e ->
                         Log.w("Test", "Error adding document", e)
                     }
                 Log.w("Test", "Added doc???")
-               Toast.makeText(this, "Successfully registered!", Toast.LENGTH_LONG).show()
-                //startActivity(Intent(this, User::class.java))
+
             }
             loginBtn.setOnClickListener { view ->
                 startActivity(Intent(this, MainActivity::class.java))

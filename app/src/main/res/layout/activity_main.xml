@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
+            android:layout_width="235dp"
+            android:layout_height="223dp"
             app:srcCompat="@drawable/lifecycle" />
 
         <TextView

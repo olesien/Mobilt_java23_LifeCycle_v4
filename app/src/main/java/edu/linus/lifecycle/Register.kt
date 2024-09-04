@@ -2,7 +2,6 @@ package edu.linus.lifecycle
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
@@ -39,6 +38,7 @@ class Register : AppCompatActivity() {
             val phoneNumber = findViewById<EditText>(R.id.phoneField)
             val gender = findViewById<RadioGroup>(R.id.radioGender)
             val receiveUpdates = findViewById<CheckBox>(R.id.receiveUpdates)
+            val personNumber = findViewById<EditText>(R.id.personNumberField)
             val errText = findViewById<TextView>(R.id.err)
             val button = findViewById<Button>(R.id.button)
             val loginBtn = findViewById<TextView>(R.id.login)
@@ -59,9 +59,10 @@ class Register : AppCompatActivity() {
                 val firestoreUser = hashMapOf(
                     "name" to nameField.text.toString(),
                     "mail" to mailField.text.toString(),
-                    "phoneNumber" to phoneNumber.text.toString().toInt(),
+                    "phone_number" to phoneNumber.text.toString().toInt(),
                     "gender" to findViewById<RadioButton>(gender.checkedRadioButtonId).text.toString(),
-                    "receive_updates" to receiveUpdates.isChecked
+                    "receive_updates" to receiveUpdates.isChecked,
+                    "person_number" to personNumber.text.toString().toInt()
                 )
 
                 Log.i(
@@ -83,7 +84,6 @@ class Register : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "createUserWithEmail:success")
-                            val user = auth.currentUser
 
                             // Add a new document with a generated ID
                             db.collection("users")

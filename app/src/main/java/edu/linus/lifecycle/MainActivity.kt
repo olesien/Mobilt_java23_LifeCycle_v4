@@ -2,7 +2,6 @@ package edu.linus.lifecycle
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -15,9 +14,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.snapshots
-import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -36,10 +32,9 @@ class MainActivity : AppCompatActivity() {
             val button = findViewById<Button>(R.id.button)
             val registerBtn = findViewById<TextView>(R.id.register)
             val errText = findViewById<TextView>(R.id.err)
-            val db = Firebase.firestore
             // Create a new user with a first and last name
 
-            button.setOnClickListener { view ->
+            button.setOnClickListener {
                 errText.text = "";
                 Log.i(
                     "Test",
@@ -54,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithEmail:success")
-                            val user = auth.currentUser
+                            auth.currentUser
                             startActivity(Intent(this, User::class.java));
                         } else {
                             // If sign in fails, display a message to the user.
@@ -66,19 +61,6 @@ class MainActivity : AppCompatActivity() {
                             ).show()
                         }
                     }
-//                // Get user
-//                db.collection("users")
-//                    .whereEqualTo("mail", mailField.text.toString())
-//                    .get()
-//                    .addOnSuccessListener { documents ->
-//                        Log.d("Test", "Account found!")
-//                        Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_LONG).show()
-//                        startActivity(Intent(this, User::class.java))
-//                    }
-//                    .addOnFailureListener { e ->
-//                        errText.text = "Account could not be found"
-//                        Log.w("Test", "Error adding document", e)
-//                    }
 
                 //startActivity(Intent(this, User::class.java))
             }
